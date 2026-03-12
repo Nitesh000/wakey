@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build binaries
+        run: |
+          mkdir dist
+          GOOS=darwin GOARCH=arm64 go build -o dist/wakey-darwin-arm64 ./cmd/wakey
+          GOOS=darwin GOARCH=amd64 go build -o dist/wakey-darwin-amd64 ./cmd/wakey
+          GOOS=linux GOARCH=amd64 go build -o dist/wakey-linux-amd64 ./cmd/wakey
+          GOOS=windows GOARCH=amd64 go build -o dist/wakey-windows-amd64.exe ./cmd/wakey
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
