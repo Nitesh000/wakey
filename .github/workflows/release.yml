@@ -78,7 +78,7 @@ jobs:
         with:
           files: dist/*
 
-    goreleaser:
+  goreleaser:
     runs-on: ubuntu-latest
 
     steps:
