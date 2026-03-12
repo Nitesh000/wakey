@@ -1,0 +1,47 @@
+project_name: wakey
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd/wakey
+    binary: wakey
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: checksums.txt
+
+release:
+  github:
+    owner: Nitesh000
+    name: wakey
+
+brews:
+  - name: wakey
+    homepage: "https://github.com/Nitesh000/wakey"
+    description: "Prevent your computer from sleeping by gently moving the cursor"
+    license: "MIT"
+
+    tap:
+      owner: Nitesh000
+      name: homebrew-wakey
+
+    commit_author:
+      name: github-actions
+      email: actions@github.com
+
+    install: |
+      bin.install "wakey"
