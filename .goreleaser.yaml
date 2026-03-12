@@ -5,24 +5,25 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/wakey
+  - id: wakey
+    main: ./cmd/wakey
     binary: wakey
     env:
       - CGO_ENABLED=1
     goos:
-      - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm64
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
 
 archives:
   - format: tar.gz
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "{{ .ProjectName }}_{{ .Version }}_darwin_{{ .Arch }}"
 
 checksum:
-  name_template: checksums.txt
+  name_template: "checksums.txt"
 
 release:
   github:
@@ -32,10 +33,10 @@ release:
 brews:
   - name: wakey
     homepage: "https://github.com/Nitesh000/wakey"
-    description: "Prevent your computer from sleeping by gently moving the cursor"
+    description: "Keep your Mac awake by gently moving the cursor"
     license: "MIT"
 
-    tap:
+    repository:
       owner: Nitesh000
       name: homebrew-wakey
 
