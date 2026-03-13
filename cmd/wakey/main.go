@@ -30,24 +30,38 @@ func main() {
 }
 
 func parseFlags() Config {
-	seconds := flag.Int("seconds", 0, "run duration in seconds")
-	minutes := flag.Int("minutes", 0, "run duration in minutes")
-	hours := flag.Int("hours", 0, "run duration in hours")
-	interval := flag.Int("interval", 5, "seconds between cursor movement")
-	versionFlag := flag.Bool("version", false, "show version")
+	var seconds int
+	flag.IntVar(&seconds, "seconds", 0, "run duration in seconds")
+	flag.IntVar(&seconds, "s", 0, "run duration in seconds (shorthand)")
+
+	var minutes int
+	flag.IntVar(&minutes, "minutes", 0, "run duration in minutes")
+	flag.IntVar(&minutes, "m", 0, "run duration in minutes (shorthand)")
+
+	var hours int
+	flag.IntVar(&hours, "hours", 0, "run duration in hours")
+	flag.IntVar(&hours, "h", 0, "run duration in hours (shorthand)")
+
+	var interval int
+	flag.IntVar(&interval, "interval", 5, "seconds between cursor movement")
+	flag.IntVar(&interval, "i", 5, "seconds between cursor movement (shorthand)")
+
+	var versionFlag bool
+	flag.BoolVar(&versionFlag, "version", false, "show version")
+	flag.BoolVar(&versionFlag, "v", false, "show version (shorthand)")
 
 	flag.Parse()
 
-	if *versionFlag {
+	if versionFlag {
 		fmt.Printf("%s %s\n", APP_NAME, Version)
 		os.Exit(0)
 	}
 
-	duration := time.Duration(*seconds)*time.Second + time.Duration(*minutes)*time.Minute + time.Duration(*hours)*time.Hour
+	duration := time.Duration(seconds)*time.Second + time.Duration(minutes)*time.Minute + time.Duration(hours)*time.Hour
 
 	return Config{
 		Duration: duration,
-		Interval: time.Duration(*interval) * time.Second,
+		Interval: time.Duration(interval) * time.Second,
 	}
 }
 
