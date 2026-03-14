@@ -19,6 +19,16 @@ A lightweight CLI tool written in **Go** that prevents your computer from going 
 
 ## Installation
 
+### Homebrew install
+
+```bash
+# step 1:
+brew tap Nitesh000/wakey
+
+# step 2:
+brew install wakey
+```
+
 ### Build from Source
 
 Requirements:
@@ -28,7 +38,7 @@ Requirements:
 Clone the repository:
 
 ```
-git clone https://github.com/YOUR_USERNAME/wakey.git
+git clone https://github.com/Nitesh000/wakey.git
 cd wakey
 ```
 
