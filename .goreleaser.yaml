@@ -38,7 +38,7 @@ brews:
 
     repository:
       owner: Nitesh000
-      name: homebrew-wakey
+      name: homebrew-tap
 
     commit_author:
       name: github-actions
